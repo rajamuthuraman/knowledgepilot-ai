@@ -22,3 +22,9 @@ This project is well explained in my course. Check it out here:
     - `/sign-in/sso` (SSO authentication)
     - `/sign-in/password-reset` (password reset flow)
 - Maintain auth flow using Clerk's `auth` helper
+
+## 02_Sidebar
+
+- Download the `components` from the course resources
+- Create Layout and Add Sidebar to it.
+- Install required dependencies
