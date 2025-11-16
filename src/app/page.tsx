@@ -1,7 +1,14 @@
-export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <h1>Welcome to Six Figure RAG Course</h1>
-    </div>
-  );
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+
+async function HomePage() {
+  const { userId } = await auth();
+
+  if (userId) {
+    redirect("/projects");
+  } else {
+    redirect("/sign-in");
+  }
 }
+
+export default HomePage;
