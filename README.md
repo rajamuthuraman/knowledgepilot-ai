@@ -64,3 +64,9 @@ This project is well explained in my course. Check it out here:
 - Create a function `loadUserData` to fetch all specific user data using Promise.all - project's data , chats, settings, files
 - `handleCreateNewChat` `handleDeleteChat`
 - Add variable types in `lib/types` to get rid of typescript errors
+
+## 05_SpecificProjectSettings
+
+- `handleDraftSettings` - will be able to play with it.
+- `apiClient` add put method to update the settings.
+- `handlePublishSettings` - will do the API call.
