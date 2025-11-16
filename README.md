@@ -38,3 +38,29 @@ This project is well explained in my course. Check it out here:
   - GET `/api/projects/` ~ List all projects
   - POST `/api/projects/` ~ Create a new project
   - DELETE `/api/projects/{project_id}` ~ Delete a specific project
+
+## 04_SpecificProjectPage
+
+- Create dynamic route to handle all projects
+- Create SpecificProjectPage
+- Set up `apiClient` to handle backend APIs  
+  Integrate API endpoints with Frontend:
+
+  Project Routes
+
+  - GET `/api/projects/{projectId}` ~ Get specific project data
+  - GET `/api/projects/{projectId}/chats` ~ Get specific project chats
+  - GET `/api/projects/{projectId}/settings` ~ Get specific project settings
+
+  Project File Routes
+
+  - GET `/api/projects/{projectId}/files`
+
+  Chat Routes
+
+  - POST `/api/chats/` ~ Create a new chat
+  - DELETE `/api/chats/{chat_id}` ~ Delete a specific chat
+
+- Create a function `loadUserData` to fetch all specific user data using Promise.all - project's data , chats, settings, files
+- `handleCreateNewChat` `handleDeleteChat`
+- Add variable types in `lib/types` to get rid of typescript errors
