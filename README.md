@@ -27,4 +27,14 @@ This project is well explained in my course. Check it out here:
 
 - Download the `components` from the course resources
 - Create Layout and Add Sidebar to it.
-- Install required dependencies
+- Install required dependencies - `lucide-react`
+
+## 03_ProjectsPage
+
+- Build Projects Page
+- Install required dependencies - `react-hot-toast`
+- `apiClient` to handle backend APIs  
+  API endpoints:
+  - GET `/api/projects/` ~ List all projects
+  - POST `/api/projects/` ~ Create a new project
+  - DELETE `/api/projects/{project_id}` ~ Delete a specific project
