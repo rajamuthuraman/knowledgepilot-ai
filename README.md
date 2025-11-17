@@ -90,3 +90,9 @@ This project is well explained in my course. Check it out here:
 - will fetch the updates via Short Polling in the backend
 - **API endpoints**
   - GET `/api/projects/{project_id}/files/{file_id}/chunks` ~ Get project document chunks
+
+## 08_Chat
+
+- Build Chat Page
+- GET `/api/chats/{chat_id}` ~ Get a specific chat
+- POST `/api/projects/{project_id}/chats/{chat_id}/messages` ~ Send a message to a chat
