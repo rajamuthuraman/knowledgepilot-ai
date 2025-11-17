@@ -96,3 +96,8 @@ This project is well explained in my course. Check it out here:
 - Build Chat Page
 - GET `/api/chats/{chat_id}` ~ Get a specific chat
 - POST `/api/projects/{project_id}/chats/{chat_id}/messages` ~ Send a message to a chat
+
+## 09_Retrieval
+
+- Just Chat with LLM 🤟
+- **No Additional changes on frontend**
