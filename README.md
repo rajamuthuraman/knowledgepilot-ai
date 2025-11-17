@@ -84,3 +84,9 @@ This project is well explained in my course. Check it out here:
 - `handleDocumentUpload` - will upload the document to s3 and confirm
 - `handleUrlAdd` - add the url
 - `handleDocumentDelete` - will delete the document from s3 and database
+
+## 07_RAG-Ingestion
+
+- will fetch the updates via Short Polling in the backend
+- **API endpoints**
+  - GET `/api/projects/{project_id}/files/{file_id}/chunks` ~ Get project document chunks
