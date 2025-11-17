@@ -70,3 +70,17 @@ This project is well explained in my course. Check it out here:
 - `handleDraftSettings` - will be able to play with it.
 - `apiClient` add put method to update the settings.
 - `handlePublishSettings` - will do the API call.
+  - PUT `/api/projects/{projectId}/settings` ~ Update specific project settings
+
+## 06_AWS-S3
+
+- Integrate PreSigned URL with Frontend
+- **API endpoints**
+  - POST `/api/projects/{project_id}/files/upload-url` ~ Generate presigned URL for frontend file upload
+  - POST `/api/projects/{project_id}/files/confirm` ~ Confirm file upload to S3
+  - POST `/{project_id}/urls` ~ Add website URL to database
+  - DELETE `/api/projects/{project_id}/files/{file_id}` ~ To delete the document
+- `apiClient` - add uploadtos3 method
+- `handleDocumentUpload` - will upload the document to s3 and confirm
+- `handleUrlAdd` - add the url
+- `handleDocumentDelete` - will delete the document from s3 and database
