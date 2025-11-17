@@ -93,6 +93,39 @@ function ProjectPage({ params }: ProjectPageProps) {
   }, [userId, projectId]);
 
   /*
+   * Short Polling
+   */
+  useEffect(() => {
+    const hasProcessingDocuments = data.documents.some(
+      (doc) =>
+        doc.processing_status &&
+        !["completed", "failed"].includes(doc.processing_status)
+    );
+
+    if (!hasProcessingDocuments) {
+      return;
+    }
+
+    const pollInterval = setInterval(async () => {
+      try {
+        const token = await getToken();
+        const documentsRes = await apiClient.get(
+          `/api/projects/${projectId}/files`,
+          token
+        );
+
+        setData((prev) => ({
+          ...prev,
+          documents: documentsRes.data,
+        }));
+      } catch (err) {
+        console.error("Polling error:", err);
+      }
+    }, 2000);
+
+    return () => clearInterval(pollInterval);
+  }, [data.documents, projectId, getToken]);
+  /*
   ! User Interation functions
 
   * - handleCreateNewChat: Create a new conversation in this project
