@@ -90,9 +90,12 @@ export default function ProjectChatPage({ params }: ProjectChatPageProps) {
       abortControllerRef.current = new AbortController();
 
       // Build the streaming URL with query params
-      const streamUrl = new URL(
-        `${API_BASE_URL}/api/projects/${projectId}/chats/${currentChatData.id}/messages/stream`
-      );
+      // const streamUrl = new URL(
+      //   `${API_BASE_URL}/api/projects/${projectId}/chats/${currentChatData.id}/messages/stream`
+      // );
+      const streamPath = `${API_BASE_URL}/api/projects/${projectId}/chats/${currentChatData.id}/messages/stream`;
+
+      const streamUrl = new URL(streamPath, window.location.origin);
       streamUrl.searchParams.set("token", token || "");
       streamUrl.searchParams.set("clerk_id", userId);
 
