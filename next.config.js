@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  skipTrailingSlashRedirect: true,
   async rewrites() {
     const backendApiUrl = process.env.BACKEND_API_URL;
 
