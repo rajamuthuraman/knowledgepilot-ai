@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   skipTrailingSlashRedirect: true,
+
   async rewrites() {
     const backendApiUrl = process.env.BACKEND_API_URL;
 
@@ -8,10 +9,20 @@ const nextConfig = {
       return [];
     }
 
+    const backendUrl = backendApiUrl.replace(/\/$/, "");
+
     return [
       {
+        source: "/backend/api/projects",
+        destination: `${backendUrl}/api/projects/`,
+      },
+      {
+        source: "/backend/api/projects/",
+        destination: `${backendUrl}/api/projects/`,
+      },
+      {
         source: "/backend/:path*",
-        destination: `${backendApiUrl.replace(/\/$/, "")}/:path*`,
+        destination: `${backendUrl}/:path*`,
       },
     ];
   },
