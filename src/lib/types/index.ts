@@ -62,3 +62,31 @@ export interface ProjectDocument {
   source_url?: string;
   processing_details: unknown;
 }
+
+export interface DocumentChunk {
+  id: string;
+  type: string[];
+  content: string;
+  original_content?: {
+    text?: string;
+    tables?: string[];
+    images?: string[];
+  };
+  page: number;
+  chunkIndex: number;
+  chars: number;
+}
+
+export interface ProcessingDetails {
+  partitioning?: {
+    elements_found?: {
+      text: number;
+      tables: number;
+      images: number;
+      titles: number;
+      other: number;
+    };
+  };
+  chunking?: { total_chunks: number };
+  summarising?: { current_chunk: number; total_chunks: number };
+}

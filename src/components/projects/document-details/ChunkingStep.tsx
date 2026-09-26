@@ -1,12 +1,13 @@
 import { CheckCircle } from "lucide-react";
 import { GenericStep } from "./GenericStep";
+import type { DocumentChunk } from "@/lib/types";
 
 interface ChunkingStepProps {
   status: "completed" | "processing" | "failed" | "pending";
   chunkingData?: {
     total_chunks: number;
   };
-  chunks: any[];
+  chunks: DocumentChunk[];
   partitioningData?: {
     elements_found?: Record<string, number>;
   };
@@ -101,3 +102,4 @@ export function ChunkingStep({
     </div>
   );
 }
+

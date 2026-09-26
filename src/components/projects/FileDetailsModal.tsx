@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { apiClient } from "@/lib/api";
-import { ProjectDocument } from "@/lib/types";
+import { DocumentChunk, ProcessingDetails, ProjectDocument } from "@/lib/types";
 import { GenericStep } from "./document-details/GenericStep";
 import { PartitioningStep } from "./document-details/PartitioningStep";
 import { ChunkingStep } from "./document-details/ChunkingStep";
@@ -61,13 +61,13 @@ export function FileDetailsModal({ document, onClose }: FileDetailsModalProps) {
   const [activeTab, setActiveTab] = useState<string>("uploading");
   const { getToken, userId } = useAuth();
 
-  const [selectedChunk, setSelectedChunk] = useState<any>(null);
-  const [chunks, setChunks] = useState<any[]>([]);
+  const [selectedChunk, setSelectedChunk] = useState<DocumentChunk | null>(null);
+  const [chunks, setChunks] = useState<DocumentChunk[]>([]);
   const [chunksLoading, setChunksLoading] = useState(false);
 
   const currentStatus = document.processing_status || "uploading";
   const isProcessingComplete = currentStatus === "completed";
-  const processingDetails = document?.processing_details as any;
+  const processingDetails = document?.processing_details as ProcessingDetails;
   const currentStep = PIPELINE_STEPS.find((s) => s.id === activeTab);
 
   const getStepStatus = (stepId: string) => {
@@ -94,7 +94,10 @@ export function FileDetailsModal({ document, onClose }: FileDetailsModalProps) {
         token
       );
 
-      const chunks = result.data.map((chunk: any) => ({
+      const chunks = result.data.map((chunk: {
+        id: string; type: string[]; content: string; original_content?: DocumentChunk["original_content"];
+        page_number: number; chunk_index: number; char_count: number;
+      }) => ({
         id: chunk.id,
         type: chunk.type,
         content: chunk.content,
@@ -205,3 +208,4 @@ export function FileDetailsModal({ document, onClose }: FileDetailsModalProps) {
     </Modal>
   );
 }
+

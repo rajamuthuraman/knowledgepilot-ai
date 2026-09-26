@@ -117,7 +117,7 @@ export function ChatInterface({
               </h2>
               <p className="text-gray-400 mb-8 leading-relaxed">
                 I can help you analyze your documents, answer questions, and
-                provide insights based on your project's knowledge base.
+                provide insights based on your project&apos;s knowledge base.
               </p>
 
               {/* Features List */}
@@ -170,3 +170,4 @@ export function ChatInterface({
     </div>
   );
 }
+

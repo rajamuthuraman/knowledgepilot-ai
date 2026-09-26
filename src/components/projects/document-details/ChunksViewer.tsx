@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Search, FileText, Loader2 } from "lucide-react";
+import type { DocumentChunk } from "@/lib/types";
+
+type ChunkFilter = "all" | "text" | "image" | "table";
 
 interface ChunksViewerProps {
-  chunks: any[];
+  chunks: DocumentChunk[];
   chunksLoading: boolean;
-  selectedChunk: any;
-  onSelectChunk: (chunk: any) => void;
+  selectedChunk: DocumentChunk | null;
+  onSelectChunk: (chunk: DocumentChunk) => void;
 }
 
 export function ChunksViewer({
@@ -15,7 +18,7 @@ export function ChunksViewer({
   onSelectChunk,
 }: ChunksViewerProps) {
   const [chunksFilter, setChunksFilter] = useState<
-    "all" | "text" | "image" | "table"
+    ChunkFilter
   >("all");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -49,7 +52,7 @@ export function ChunksViewer({
             {["all", "text", "image", "table"].map((filter) => (
               <button
                 key={filter}
-                onClick={() => setChunksFilter(filter as any)}
+                onClick={() => setChunksFilter(filter as ChunkFilter)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                   chunksFilter === filter
                     ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
@@ -138,3 +141,4 @@ export function ChunksViewer({
     </div>
   );
 }
+

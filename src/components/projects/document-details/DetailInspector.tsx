@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Eye } from "lucide-react";
+import type { DocumentChunk } from "@/lib/types";
 
 interface DetailInspectorProps {
-  selectedChunk: any;
+  selectedChunk: DocumentChunk | null;
   isProcessingComplete: boolean;
 }
 
@@ -11,11 +12,6 @@ export function DetailInspector({
   isProcessingComplete,
 }: DetailInspectorProps) {
   const [detailTab, setDetailTab] = useState<"summary" | "original">("summary");
-
-  // Reset to summary when chunk changes
-  useEffect(() => {
-    setDetailTab("summary");
-  }, [selectedChunk]);
 
   return (
     <div className="w-[40%] bg-[#1e1e1e] border-l border-gray-700 flex flex-col">
@@ -167,3 +163,4 @@ export function DetailInspector({
     </div>
   );
 }
+
