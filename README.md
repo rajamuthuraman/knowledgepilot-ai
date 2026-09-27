@@ -1,103 +1,114 @@
-# Six Figure RAG Web
+# KnowledgePilot AI
 
-Hi 👋 I'm Harish Neel!
+KnowledgePilot AI is a production-oriented document question-answering platform. Users can create separate workspaces, upload project documents, and ask questions in natural language. The system searches project documents first and can use web search as a fallback when the internal knowledge base does not contain enough information.
 
-This project is well explained in my course. Check it out here:
+## What it does
 
-👉 [Six Figure RAG Course](https://harishneel.com/six-figure-rag)
+- Secure sign-in and protected application routes
+- Project-based workspaces for separating knowledge
+- PDF and text document uploads
+- Background document processing
+- Semantic, keyword, and hybrid retrieval
+- Conversational chat over project documents
+- Internal-document-first answers with optional web fallback
+- API proxying from the Vercel frontend to the backend service
 
-## 00_Setup
+## Architecture
 
-- Ensure that you have install node
-- Official docs : https://nextjs.org/docs/app/getting-started/installation
+```text
+Browser
+  |
+  v
+Next.js frontend on Vercel
+  |
+  v
+FastAPI backend on Amazon ECS/Fargate
+  |                    |
+  v                    v
+Supabase/PostgreSQL     Redis + background worker
+  |
+  v
+pgvector document search
+```
 
-## 01_ClerkAuth
+## Technology
 
-- Set up middleware and wrap app with Clerk Provider
-  - Docs: https://clerk.com/docs/nextjs/getting-started/quickstart
-- Build custom `/sign-in` and `/sign-up` pages
-  - Docs: https://clerk.com/docs/nextjs/guides/development/custom-sign-in-or-up-page
-  - Ensure all auth routes are covered:
-    - `/sign-in` (main sign-in page)
-    - `/sign-in/sso` (SSO authentication)
-    - `/sign-in/password-reset` (password reset flow)
-- Maintain auth flow using Clerk's `auth` helper
+### Frontend
 
-## 02_Sidebar
+- Next.js and React
+- TypeScript
+- Tailwind CSS
+- Clerk authentication
 
-- Download the `components` from the course resources
-- Create Layout and Add Sidebar to it.
-- Install required dependencies - `lucide-react`
+### Backend and AI
 
-## 03_ProjectsPage
+- Python and FastAPI
+- OpenAI models and embeddings
+- LangChain and LangGraph agent workflows
+- Vector, keyword, hybrid, and multi-query retrieval
+- RRF ranking for combining search results
+- Celery and Redis for background document processing
 
-- Build Projects Page
-- Install required dependencies - `react-hot-toast`
-- `apiClient` to handle backend APIs  
-  API endpoints:
-  - GET `/api/projects/` ~ List all projects
-  - POST `/api/projects/` ~ Create a new project
-  - DELETE `/api/projects/{project_id}` ~ Delete a specific project
+### Data and infrastructure
 
-## 04_SpecificProjectPage
+- Supabase PostgreSQL with pgvector
+- S3-compatible object storage
+- Docker
+- Amazon ECR
+- Amazon ECS with Fargate
+- Application Load Balancer
+- Amazon ElastiCache for Redis
+- Vercel and GitHub
+- CloudWatch and structured application logs
 
-- Create dynamic route to handle all projects
-- Create SpecificProjectPage
-- Set up `apiClient` to handle backend APIs  
-  Integrate API endpoints with Frontend:
+## Local development
 
-  Project Routes
+### Frontend
 
-  - GET `/api/projects/{projectId}` ~ Get specific project data
-  - GET `/api/projects/{projectId}/chats` ~ Get specific project chats
-  - GET `/api/projects/{projectId}/settings` ~ Get specific project settings
+```powershell
+cd client
+npm install
+npm run dev
+```
 
-  Project File Routes
+The frontend runs at [http://localhost:3000](http://localhost:3000).
 
-  - GET `/api/projects/{projectId}/files`
+### Backend
 
-  Chat Routes
+Install the Python dependencies with Poetry, configure the server environment variables, and start the API and worker services using the project's Docker Compose configuration.
 
-  - POST `/api/chats/` ~ Create a new chat
-  - DELETE `/api/chats/{chat_id}` ~ Delete a specific chat
+Typical local services include:
 
-- Create a function `loadUserData` to fetch all specific user data using Promise.all - project's data , chats, settings, files
-- `handleCreateNewChat` `handleDeleteChat`
-- Add variable types in `lib/types` to get rid of typescript errors
+- FastAPI API
+- Celery worker
+- Redis
 
-## 05_SpecificProjectSettings
+Never commit real API keys or secrets. Use local environment files and configure production values in the deployment platform.
 
-- `handleDraftSettings` - will be able to play with it.
-- `apiClient` add put method to update the settings.
-- `handlePublishSettings` - will do the API call.
-  - PUT `/api/projects/{projectId}/settings` ~ Update specific project settings
+## Production deployment
 
-## 06_AWS-S3
+The frontend is deployed from the main GitHub branch to Vercel. The backend is packaged as a Docker image, pushed to Amazon ECR, and run as separate ECS/Fargate API and worker services. The Application Load Balancer provides the backend entry point, while the Vercel rewrite routes browser requests to the API.
 
-- Integrate PreSigned URL with Frontend
-- **API endpoints**
-  - POST `/api/projects/{project_id}/files/upload-url` ~ Generate presigned URL for frontend file upload
-  - POST `/api/projects/{project_id}/files/confirm` ~ Confirm file upload to S3
-  - POST `/{project_id}/urls` ~ Add website URL to database
-  - DELETE `/api/projects/{project_id}/files/{file_id}` ~ To delete the document
-- `apiClient` - add uploadtos3 method
-- `handleDocumentUpload` - will upload the document to s3 and confirm
-- `handleUrlAdd` - add the url
-- `handleDocumentDelete` - will delete the document from s3 and database
+Before testing document questions in production:
 
-## 07_RAG-Ingestion
+1. Confirm the API and worker services are running.
+2. Confirm the load balancer target is healthy.
+3. Upload a document to a project.
+4. Wait for background processing to finish.
+5. Ask a question and verify that the answer uses the uploaded document.
+6. Check Vercel and ECS/CloudWatch logs if a request fails.
 
-- will fetch the updates via Short Polling in the backend
-- **API endpoints**
-  - GET `/api/projects/{project_id}/files/{file_id}/chunks` ~ Get project document chunks
+## Project structure
 
-## 08_Chat
+```text
+client/   Next.js user interface and authentication flows
+server/   FastAPI API, RAG pipeline, agents, ingestion, and workers
+```
 
-- Build Chat Page
-- GET `/api/chats/{chat_id}` ~ Get a specific chat
-- POST `/api/projects/{project_id}/chats/{chat_id}/messages` ~ Send a message to a chat
+## Author
 
-## 09_Retrieval
+Built and maintained by **Raja Muthuraman** as an end-to-end AI engineering project covering product development, retrieval-augmented generation, cloud deployment, and production troubleshooting.
 
-- Just Chat with LLM 🤟
-- **No Additional changes on frontend**
+## License
+
+This repository is intended for demonstration and development purposes. Add a formal license before distributing it as an open-source package.
